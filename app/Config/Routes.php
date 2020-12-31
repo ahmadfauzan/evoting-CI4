@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/visi-misi/(:num)', 'Home::visi_misi/$1');
+$routes->get('/hasil/(:num)', 'Home::hitungHasil/$1');
+$routes->get('/hasil', 'Home::hasil');
 
 /**
  * --------------------------------------------------------------------

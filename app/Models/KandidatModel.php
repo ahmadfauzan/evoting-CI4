@@ -10,13 +10,22 @@ class KandidatModel extends Model
     protected $table      = 'kandidat';
     protected $allowedFields = ['nama', 'semester', 'prodi', 'img'];
 
-    public function getKandidat($pos)
+    public function getKandidat($pos, $no_urut)
     {
-        return $this
-            ->select('nama', 'posisi')
-            ->join('posisi', 'posisi.id_kandidat = kandidat.id_kandidat')
-            ->where('posisi.posisi', $pos)
-            ->get()->getResultArray();
+        if ($no_urut == 0) {
+            return $this
+                ->select('nama', 'posisi')
+                ->join('posisi', 'posisi.id_kandidat = kandidat.id_kandidat')
+                ->where('posisi.posisi', $pos)
+                ->get()->getResultArray();
+        } else {
+            return $this
+                ->select('nama')
+                ->join('posisi', 'posisi.id_kandidat = kandidat.id_kandidat')
+                ->where('posisi.posisi', $pos)
+                ->where('kandidat.no_urut', $no_urut)
+                ->get()->getRowArray();
+        }
     }
 
 

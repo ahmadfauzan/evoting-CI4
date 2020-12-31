@@ -49,10 +49,13 @@
       </form>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link count-indicator" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-            <i class="mdi mdi-bell-outline"></i>
-            <span class="count">7</span>
-          </a>
+          <?php if (logged_in()) : ?>
+            <a class="dropdown-item" href="/logout">Logout<i class="dropdown-item-icon ti-help-alt"></i></a>
+          <?php else : ?>
+            <a class="dropdown-item" href="/login">Login<i class="dropdown-item-icon ti-help-alt"></i></a>
+
+          <?php endif; ?>
+
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
             <a class="dropdown-item py-3">
               <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
@@ -140,7 +143,7 @@
             <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
             <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
             <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-            <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+
           </div>
         </li>
       </ul>
