@@ -7,7 +7,8 @@ use CodeIgniter\Model;
 class HasilModel extends Model
 {
     protected $table      = 'hasil';
-    protected $allowedFields = ['no_urut', 'user_id'];
+    protected $primaryKey = 'id_hasil';
+    protected $allowedFields = ['no_urut', 'user_id', 'waktu_pilih', 'isUpdate'];
 
     public function getJml($user_id)
     {
@@ -40,6 +41,14 @@ class HasilModel extends Model
             ->GroupBy('hasil.no_urut')
             ->OrderBy('total', 'DESC')
             ->limit(1)
+            ->get()->getRowArray();
+    }
+
+    public function getUserVote($user_id)
+    {
+        return $this
+            ->select('*')
+            ->where('user_id', $user_id)
             ->get()->getRowArray();
     }
 }

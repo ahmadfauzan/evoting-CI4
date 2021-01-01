@@ -20,14 +20,46 @@ class Home extends BaseController
 
 	public function index()
 	{
-		$data = [
-			'paslon' => $this->paslonModel->findAll(),
-			'ketua' => $this->kandidatModel->getKandidat(1, 0),
-			'wakil' => $this->kandidatModel->getKandidat(2, 0)
-		];
-		// dd($data['ketua']);
-		// dd($data['paslon']);
-		return view('vote/index', $data);
+		$jml = $this->hasilModel->getJml((user_id()));
+
+		if ($jml > 0) {
+
+			$userVote = $this->hasilModel->getUserVote((user_id()));
+
+			$now    = time();
+			$target = strtotime($userVote['waktu_pilih']);
+			$diff   = $now - $target;
+
+			// 15 minutes = 15*60 seconds = 900
+			if ($diff >= 300) {
+				$hasil = [
+					'id_hasil' => $userVote['id_hasil'],
+					'isExpired' => 1
+				];
+				$this->hasilModel->save($hasil);
+			}
+			$data = [
+				'paslon' => $this->paslonModel->findAll(),
+				'ketua' => $this->kandidatModel->getKandidat(1, 0),
+				'wakil' => $this->kandidatModel->getKandidat(2, 0),
+				'pilih' => $jml,
+				'pilihanUser' => $this->hasilModel->getUserVote((user_id()))
+			];
+			// dd($data['ketua']);
+			// dd($data['paslon']);
+			return view('vote/index', $data);
+		} else {
+			$data = [
+				'paslon' => $this->paslonModel->findAll(),
+				'ketua' => $this->kandidatModel->getKandidat(1, 0),
+				'wakil' => $this->kandidatModel->getKandidat(2, 0),
+				'pilih' => $jml,
+				'pilihanUser' => $this->hasilModel->getUserVote((user_id()))
+			];
+			// dd($data['ketua']);
+			// dd($data['paslon']);
+			return view('vote/index', $data);
+		}
 	}
 
 	public function visi_misi($id_paslon)
@@ -46,7 +78,8 @@ class Home extends BaseController
 	{
 		$hasil = [
 			'no_urut' => $id,
-			'user_id' => (user_id())
+			'user_id' => (user_id()),
+			'waktu_pilih' => date("Y-m-d H:i:s")
 		];
 
 		$jml = $this->hasilModel->getJml((user_id()));
@@ -55,7 +88,34 @@ class Home extends BaseController
 			$this->hasilModel->save($hasil);
 			return redirect()->to('/home/hasil');
 		} else {
-			return redirect()->to('/home')->withInput();
+			session()->setFlashdata(['message' => 'Anda sudah memilih!', 'tipe' => 'danger']);
+			return redirect()->to('/home');
+		}
+	}
+
+	public function ubahHasil($id)
+	{
+
+
+		$userVote = $this->hasilModel->getUserVote((user_id()));
+
+		$now    = time();
+		$target = strtotime($userVote['waktu_pilih']);
+		$diff   = $now - $target;
+
+		// 15 minutes = 15*60 seconds = 900
+		if ($diff <= 300) {
+			$hasil = [
+				'id_hasil' => $userVote['id_hasil'],
+				'no_urut' => $id,
+				'user_id' => (user_id()),
+				'isUpdate' => 1
+			];
+			$this->hasilModel->save($hasil);
+			return redirect()->to('/hasil');
+		} else {
+			session()->setFlashdata(['message' => 'Waktu mengganti pilihan sudah habis', 'tipe' => 'danger']);
+			return redirect()->to('/home');
 		}
 	}
 
@@ -64,7 +124,12 @@ class Home extends BaseController
 		$data['ketua'] = $this->kandidatModel->getKandidat(1, 0);
 		$data['hasil'] = $this->hasilModel->getHasil();
 		$data['unggul'] = $this->hasilModel->getPaslonUnggul();
-		$no_urut = $data['unggul']['no_urut'];
+		if ($data['unggul'] != null) {
+
+			$no_urut = $data['unggul']['no_urut'];
+		} else {
+			$no_urut = 1;
+		}
 		$data['ketuaUnggul'] = $this->kandidatModel->getKandidat(1, $no_urut);
 		$data['wakilUnggul'] = $this->kandidatModel->getKandidat(2, $no_urut);
 		$data['totalUser'] = $this->userModel->getJmlUser();
