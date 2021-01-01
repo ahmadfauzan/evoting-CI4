@@ -27,7 +27,7 @@
 <!-- Custom js for this page-->
 <script src="/assets/js/demo_1/dashboard.js"></script>
 <!-- End custom js for this page-->
-<!-- <script src="/assets/js/shared/jquery.cookie.js" type="text/javascript"></script> -->
+<script src="/assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
 </body>
 
 </html>

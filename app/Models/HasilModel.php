@@ -8,7 +8,7 @@ class HasilModel extends Model
 {
     protected $table      = 'hasil';
     protected $primaryKey = 'id_hasil';
-    protected $allowedFields = ['no_urut', 'user_id', 'waktu_pilih', 'isUpdate'];
+    protected $allowedFields = ['no_urut', 'user_id', 'waktu_pilih', 'isUpdate', 'isExpired'];
 
     public function getJml($user_id)
     {

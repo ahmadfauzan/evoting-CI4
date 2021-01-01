@@ -15,25 +15,28 @@
       <div class="col-md-8 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <!-- <h3 class="mb-0 text-center">Budi</h3>
-                  <h3 class="mb-4 text-center">Rahmat</h3>
-                  <h1 class="mb-0 text-center">1</h1> -->
-            <img src="/assets/images/<?= $visi_misi[0]['img']; ?>" class="img-fluid mb-3" alt="">
+
+            <img src="/assets/images/<?= $visi_misi['img']; ?>" class="img-fluid mb-3" alt="">
             <h3>Visi :</h3>
             <ul>
-              <?php foreach ($visi_misi as $vs) : ?>
-                <li><?= $vs['visi']; ?></li>
+              <?php
+              $visi = $visi_misi['visi'];
+              $visi = explode('//', $visi);
+              foreach ($visi as $v) : ?>
+                <li><?= $v; ?></li>
               <?php endforeach; ?>
             </ul>
 
             <h3>Misi :</h3>
             <ul>
-              <?php foreach ($visi_misi as $vs) : ?>
-                <li><?= $vs['misi']; ?></li>
+              <?php
+              $misi = $visi_misi['misi'];
+              $misi = explode('//', $misi);
+              foreach ($misi as $m) : ?>
+                <li><?= $m; ?></li>
               <?php endforeach; ?>
             </ul>
 
-            <!-- <canvas class="mt-5" height="120" id="sales-statistics-overview"></canvas> -->
           </div>
         </div>
       </div>
@@ -45,7 +48,7 @@
                 <img src="/assets/images/<?= $kd['img'] ?>" class="img-fluid p-2" alt="...">
               </div>
               <div class="col-md-8">
-                <h3 class="px-4 mb-n2 mt-1"><?= $kd['nama'] ?></h3>
+                <h3 class="px-4 mb-n2 mt-1"><?= $kd['nama'] ?> <?= ($kd['posisi'] == 1) ? '(Ketua)' : '(Wakil)'; ?></h3>
                 <div class="card-body">
                   <p class="card-text">Semester <?= $kd['semester']; ?></p>
                   <p class="card-text">Prodi <?= $kd['prodi']; ?></p>
@@ -54,9 +57,15 @@
               <div class="col-md-12 px-3">
                 <p class="card-text">Prestasi :</p>
                 <ul>
-                  <?php foreach ($prestasi as $p) : ?>
-                    <li><?= $p['prestasi']; ?></li>
+                  <?php
+                  $prestasi = $kd['prestasi'];
+                  $prestasi = explode('//', $prestasi);
+
+                  foreach ($prestasi as $p) : ?>
+                    <li><?= $p; ?></li>
                   <?php endforeach; ?>
+
+
                 </ul>
               </div>
             </div>

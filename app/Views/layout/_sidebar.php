@@ -1,14 +1,6 @@
 <div class="container-fluid page-body-wrapper">
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-      <li class="nav-item nav-profile">
-        <a href="#" class="nav-link">
-          <div class="text-wrapper">
-            <p class="profile-name">Allen Moreno</p>
-            <p class="designation">Premium user</p>
-          </div>
-        </a>
-      </li>
       <li class="nav-item nav-category">Main Menu</li>
       <li class="nav-item">
         <a class="nav-link" href="/home">
@@ -24,15 +16,15 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-            </li>
+            <?php $i = 0;
+            foreach ($ketua as $k) : ?>
+              <li class="nav-item">
+                <a class="nav-link" href="/visi-misi/<?= $k['no_urut'] ?>"><?= $k['no_urut']; ?> <?= $k['nama']; ?> & <?= $wakil[$i]['nama']; ?></a>
+              </li>
+
+            <?php
+              $i++;
+            endforeach; ?>
           </ul>
         </div>
       </li>

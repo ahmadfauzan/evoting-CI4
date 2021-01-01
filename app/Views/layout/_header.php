@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.addons.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
 

@@ -18,7 +18,7 @@
       <div class="col-md-8 grid-margin">
         <div class="card">
           <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Doughnut chart</h4>
+            <h4 class="card-title mb-0">Hasil Voting</h4>
             <div id="doughnut-chart-legend" class="mr-4"></div>
           </div>
           <div class="card-body d-flex flex-column">
@@ -64,7 +64,7 @@
 <div class="col-md-4 grid-margin stretch-card">
   <div class="card">
     <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-      <h4 class="mb-0">Unggul sementara</h4>
+      <h4 class="mb-0"><?= ($totalHasil - $totalUser == 0) ? 'Pemenang' : 'Unggul Sementara' ?></h4>
       <div id="doughnut-chart-legend" class="mr-4"></div>
     </div>
     <div class="card-body">
@@ -72,7 +72,6 @@
       <h3 class="mb-4 text-center"><?= $wakilUnggul['nama']; ?></h3>
       <h1 class="mb-0 text-center"><?= $unggul['no_urut']; ?></h1>
       <img src="/assets/images/<?= $unggul['img'] ?>" class="img-fluid mb-3" alt="">
-      <!-- <canvas class="mt-5" height="120" id="sales-statistics-overview"></canvas> -->
     </div>
   </div>
 </div>
@@ -100,7 +99,6 @@
                 $jumlah .= "'$to'" . ", ";
                 if ($length > 1) {
 
-                  // <?= $hasil[$i]['total'] / $totalUser * 100 
                   $i++;
                 } else {
                   $i = 0;

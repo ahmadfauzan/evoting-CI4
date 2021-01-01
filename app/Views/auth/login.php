@@ -30,9 +30,11 @@ background-size: 100% 100%;">
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
             <div class="auto-form-wrapper">
+
               <form action="<?= route_to('login') ?>" method="post">
                 <?= csrf_field() ?>
                 <h3 class="text-center mt-n3 mb-4">Login Evoting</h3>
+                <?= view('Myth\Auth\Views\_message_block') ?>
                 <div class="form-group">
                   <div class="form-group">
                     <label for="login">Username</label>

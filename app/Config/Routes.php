@@ -36,6 +36,7 @@ $routes->get('/visi-misi/(:num)', 'Home::visi_misi/$1');
 $routes->get('/hasil/(:num)', 'Home::hitungHasil/$1');
 $routes->get('/ubah/(:num)', 'Home::ubahHasil/$1');
 $routes->get('/hasil', 'Home::hasil');
+$routes->get('/register', 'Home::notFound');
 
 /**
  * --------------------------------------------------------------------

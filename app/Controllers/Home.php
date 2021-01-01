@@ -30,23 +30,31 @@ class Home extends BaseController
 			$target = strtotime($userVote['waktu_pilih']);
 			$diff   = $now - $target;
 
-			// 15 minutes = 15*60 seconds = 900
-			if ($diff >= 300) {
-				$hasil = [
-					'id_hasil' => $userVote['id_hasil'],
-					'isExpired' => 1
-				];
-				$this->hasilModel->save($hasil);
+			if ($userVote['isExpired'] == 0) {
+				if ($diff >= 300) {
+					$hasil = [
+						'id_hasil' => $userVote['id_hasil'],
+						'isExpired' => 1
+					];
+					$this->hasilModel->save($hasil);
+					$data = [
+						'paslon' => $this->paslonModel->findAll(),
+						'ketua' => $this->kandidatModel->getKandidat(1, 0),
+						'wakil' => $this->kandidatModel->getKandidat(2, 0),
+						'pilih' => $jml,
+						'pilihanUser' => $this->hasilModel->getUserVote((user_id()))
+					];
+
+					return view('vote/index', $data);
+				}
 			}
 			$data = [
 				'paslon' => $this->paslonModel->findAll(),
 				'ketua' => $this->kandidatModel->getKandidat(1, 0),
 				'wakil' => $this->kandidatModel->getKandidat(2, 0),
 				'pilih' => $jml,
-				'pilihanUser' => $this->hasilModel->getUserVote((user_id()))
+				'pilihanUser' => $this->hasilModel->getUserVote((user_id())),
 			];
-			// dd($data['ketua']);
-			// dd($data['paslon']);
 			return view('vote/index', $data);
 		} else {
 			$data = [
@@ -56,20 +64,21 @@ class Home extends BaseController
 				'pilih' => $jml,
 				'pilihanUser' => $this->hasilModel->getUserVote((user_id()))
 			];
-			// dd($data['ketua']);
-			// dd($data['paslon']);
+
 			return view('vote/index', $data);
 		}
 	}
 
-	public function visi_misi($id_paslon)
+	public function visi_misi($no_urut)
 	{
-		// $data['paslon'] = $this->paslonModel->getWhere(['no_urut' => $no_urut])->getResultArray();
-		// $data['kandidat'] = $this->kandidatModel->getWhere(['no_urut' => $no_urut])->getResultArray();
-		$data['visi_misi'] = $this->paslonModel->getVisiMisi($id_paslon);
-		$data['prestasi'] = $this->kandidatModel->getPrestasi($id_paslon);
-		$data['kandidat'] =  $this->kandidatModel->getWhere(['no_urut' => $id_paslon])->getResultArray();
-		// dd($data['kandidat']);
+
+		$data['visi_misi'] = $this->paslonModel->getVisiMisi($no_urut);
+		$data['kandidat'] =  $this->kandidatModel->getWhere(['no_urut' => $no_urut])->getResultArray();
+		$data['ketua'] = $this->kandidatModel->getKandidat(1, 0);
+		$data['wakil'] = $this->kandidatModel->getKandidat(2, 0);
+		if (empty($data['visi_misi'])) {
+			throw new \CodeIgniter\Exceptions\PageNotFoundException();
+		}
 
 		return view('vote/visi_misi', $data);
 	}
@@ -84,11 +93,10 @@ class Home extends BaseController
 
 		$jml = $this->hasilModel->getJml((user_id()));
 		if ($jml < 1) {
-			// $validation = \Config\Services::validation();
 			$this->hasilModel->save($hasil);
 			return redirect()->to('/home/hasil');
 		} else {
-			session()->setFlashdata(['message' => 'Anda sudah memilih!', 'tipe' => 'danger']);
+			session()->setFlashdata(['pesan' => 'Anda sudah memilih!', 'tipe' => 'danger']);
 			return redirect()->to('/home');
 		}
 	}
@@ -103,7 +111,6 @@ class Home extends BaseController
 		$target = strtotime($userVote['waktu_pilih']);
 		$diff   = $now - $target;
 
-		// 15 minutes = 15*60 seconds = 900
 		if ($diff <= 300) {
 			$hasil = [
 				'id_hasil' => $userVote['id_hasil'],
@@ -114,7 +121,7 @@ class Home extends BaseController
 			$this->hasilModel->save($hasil);
 			return redirect()->to('/hasil');
 		} else {
-			session()->setFlashdata(['message' => 'Waktu mengganti pilihan sudah habis', 'tipe' => 'danger']);
+			session()->setFlashdata(['pesan' => 'Waktu mengganti pilihan sudah habis', 'tipe' => 'danger']);
 			return redirect()->to('/home');
 		}
 	}
@@ -122,6 +129,7 @@ class Home extends BaseController
 	public function hasil()
 	{
 		$data['ketua'] = $this->kandidatModel->getKandidat(1, 0);
+		$data['wakil'] = $this->kandidatModel->getKandidat(2, 0);
 		$data['hasil'] = $this->hasilModel->getHasil();
 		$data['unggul'] = $this->hasilModel->getPaslonUnggul();
 		if ($data['unggul'] != null) {
@@ -134,9 +142,13 @@ class Home extends BaseController
 		$data['wakilUnggul'] = $this->kandidatModel->getKandidat(2, $no_urut);
 		$data['totalUser'] = $this->userModel->getJmlUser();
 		$data['totalHasil'] = $this->hasilModel->getJml(0);
-		// dd($data['hasil']);
-		// dd($data['ketuaUnggul']);
+
 		return view('vote/hasil', $data);
+	}
+
+	public function notFound()
+	{
+		return view('errors/html/error_404');
 	}
 
 

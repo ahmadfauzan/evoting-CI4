@@ -1,84 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+	<!-- Required meta tags -->
 	<meta charset="utf-8">
-	<title>404 Page Not Found</title>
-
-	<style>
-	div.logo {
-		height: 200px;
-		width: 155px;
-		display: inline-block;
-		opacity: 0.08;
-		position: absolute;
-		top: 2rem;
-		left: 50%;
-		margin-left: -73px;
-	}
-	body {
-		height: 100%;
-		background: #fafafa;
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #777;
-		font-weight: 300;
-	}
-	h1 {
-		font-weight: lighter;
-		letter-spacing: 0.8;
-		font-size: 3rem;
-		margin-top: 0;
-		margin-bottom: 0;
-		color: #222;
-	}
-	.wrap {
-		max-width: 1024px;
-		margin: 5rem auto;
-		padding: 2rem;
-		background: #fff;
-		text-align: center;
-		border: 1px solid #efefef;
-		border-radius: 0.5rem;
-		position: relative;
-	}
-	pre {
-		white-space: normal;
-		margin-top: 1.5rem;
-	}
-	code {
-		background: #fafafa;
-		border: 1px solid #efefef;
-		padding: 0.5rem 1rem;
-		border-radius: 5px;
-		display: block;
-	}
-	p {
-		margin-top: 1.5rem;
-	}
-	.footer {
-		margin-top: 2rem;
-		border-top: 1px solid #efefef;
-		padding: 1em 2em 0 2em;
-		font-size: 85%;
-		color: #999;
-	}
-	a:active,
-	a:link,
-	a:visited {
-		color: #dd4814;
-	}
-</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
+	<!-- plugins:css -->
+	<link rel="stylesheet" href="../../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="../../assets/vendors/iconfonts/ionicons/dist/css/ionicons.css">
+	<link rel="stylesheet" href="../../assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+	<link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.addons.css">
+	<!-- endinject -->
+	<!-- inject:css -->
+	<link rel="stylesheet" href="../../assets/css/shared/style.css">
+	<!-- endinject -->
+	<link rel="shortcut icon" href="../../assets/images/favicon.ico" />
 </head>
-<body>
-	<div class="wrap">
-		<h1>404 - File Not Found</h1>
 
-		<p>
-			<?php if (! empty($message) && $message !== '(null)') : ?>
-				<?= esc($message) ?>
-			<?php else : ?>
-				Sorry! Cannot seem to find the page you were looking for.
-			<?php endif ?>
-		</p>
+<body>
+	<div class="container-scroller">
+		<div class="container-fluid page-body-wrapper full-page-wrapper">
+			<div class="content-wrapper d-flex align-items-center text-center error-page bg-primary">
+				<div class="row flex-grow">
+					<div class="col-lg-7 mx-auto text-white">
+						<div class="row align-items-center d-flex flex-row">
+							<div class="col-lg-6 text-lg-right pr-lg-4">
+								<h1 class="display-1 mb-0">404</h1>
+							</div>
+							<div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
+								<h2>SORRY!</h2>
+								<h3 class="font-weight-light">The page you’re looking for was not found.</h3>
+							</div>
+						</div>
+						<div class="row mt-5">
+							<div class="col-12 text-center mt-xl-2">
+								<a class="text-white font-weight-medium" href="/home">Back to home</a>
+							</div>
+						</div>
+						<div class="row mt-5">
+							<div class="col-12 mt-xl-2">
+								<p class="text-white font-weight-medium text-center">Copyright &copy; 2020 All rights reserved.</p>
+								<p class="footer-text text-center text-center"><a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank"> Free Bootstrap template </a> from BootstrapDash templates</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- content-wrapper ends -->
+		</div>
+		<!-- page-body-wrapper ends -->
 	</div>
+	<!-- container-scroller -->
+	<!-- plugins:js -->
+	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+	<script src="../../assets/vendors/js/vendor.bundle.addons.js"></script>
+	<!-- endinject -->
+	<!-- inject:js -->
+	<script src="../../assets/js/shared/off-canvas.js"></script>
+	<script src="../../assets/js/shared/misc.js"></script>
+	<!-- endinject -->
+	<script src="../../assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
 </body>
+
 </html>
